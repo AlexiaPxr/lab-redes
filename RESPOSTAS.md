@@ -23,3 +23,12 @@
 2. TTL (Time To Live) é um contador de saltos. A cada roteador atravessado, seu valor é reduzido em 1 e, quando chega a zero, o pacote é descartado. No código, IP_MULTICAST_TTL = 2 limita o pacote a dois saltos. Isso é importante no multicast para limitar o alcance do tráfego e evitar que ele se espalhe por redes além do necessário.
 
 3. Não. O cliente que entrar no grupo depois do envio não recebe as mensagens anteriores, pois o multicast não mantém histórico ou fila de mensagens. Os pacotes são enviados em tempo real e, se o cliente não estiver inscrito no momento do envio, ele perde aquela mensagem.
+
+
+## Parte D — WebSocket
+
+1. Após o handshake, a conexão TCP permanece aberta, mas passa de um modelo HTTP de requisição e resposta para uma comunicação full-duplex. Assim, tanto o cliente quanto o servidor podem enviar mensagens a qualquer momento, sem precisar esperar por uma requisição do outro lado.
+
+2. No multicast, o servidor envia uma mensagem para um endereço de grupo, e a própria rede se encarrega de distribuí-la aos clientes inscritos. No WebSocket, o servidor mantém uma lista de conexões ativas e precisa enviar a mensagem individualmente para cada cliente. Portanto, o multicast deixa a distribuição a cargo da rede, enquanto o WebSocket permite maior controle sobre cada cliente.
+
+3. O WebSocket facilita a implementação porque já oferece suporte a múltiplos clientes, delimitação de mensagens e comunicação com navegadores. No TCP puro, seria necessário implementar essas funcionalidades manualmente, além de gerenciar as conexões e definir como as mensagens seriam separadas no fluxo de bytes.
