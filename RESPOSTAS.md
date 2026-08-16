@@ -14,3 +14,12 @@
 2. O UDP é mais simples porque não estabelece uma conexão persistente e não utiliza mecanismos como accept(), confirmação de recebimento, controle de sequência ou retransmissão. Dessa forma, possui menor overhead e maior velocidade, mas abre mão das garantias de entrega, ordem e confiabilidade oferecidas pelo TCP.
 
 3. O UDP é adequado para aplicações em tempo real, como chamadas de vídeo e jogos online, nas quais é melhor continuar a comunicação do que esperar pela retransmissão de um pacote atrasado. Já o TCP é mais adequado para situações em que a integridade dos dados é essencial, como transferências de arquivos, pois garante a entrega e a ordem dos dados.
+
+
+## Parte C — Multicast
+
+1. No unicast, o servidor precisa enviar um pacote separado para cada cliente, fazendo com que a duplicação do tráfego aconteça na origem. No multicast, o servidor envia um único pacote para o grupo, e os roteadores da rede fazem a replicação quando necessário. Assim, o multicast reduz a carga no servidor e torna o tráfego mais eficiente para muitos destinatários.
+
+2. TTL (Time To Live) é um contador de saltos. A cada roteador atravessado, seu valor é reduzido em 1 e, quando chega a zero, o pacote é descartado. No código, IP_MULTICAST_TTL = 2 limita o pacote a dois saltos. Isso é importante no multicast para limitar o alcance do tráfego e evitar que ele se espalhe por redes além do necessário.
+
+3. Não. O cliente que entrar no grupo depois do envio não recebe as mensagens anteriores, pois o multicast não mantém histórico ou fila de mensagens. Os pacotes são enviados em tempo real e, se o cliente não estiver inscrito no momento do envio, ele perde aquela mensagem.
